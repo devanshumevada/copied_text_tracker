@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>CopyLater</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="https://www.vectorlogo.zone/logos/clockifyme/clockifyme-icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">CopyLater
+        </a>
+        <form class="form-inline">
+            <button class="btn btn-light" onclick="url_for('index')">Refresh</button>
+        </form>
+    </nav>
+
+    <div class=" container ">
+        <div class="row ">
+            <table class="table table-stripped ">
+                <thead align="center ">
+                    <th scope="col ">Content</th>
+                    <th scope="col ">Action</th>
+                </thead>
+                <tbody>
+                    {% if links.val() %} {% for link in links.each() %}
+                    <tr>
+                        <td>{{link.val()}}</td>
+                        <td align="center ">
+                            <a href="/delete_data/{{link.key()}} " class="btn btn-danger ">Delete entry</a>
+                            <form action="/copy_data " method="POST" style="display: inline; ">
+                                <input type="hidden" value="{{link.val()}} " name='linkval' />
+                                <input type="submit" class="btn btn-primary" value="Copy to Clipboard" />
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>Nothing to show</tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
