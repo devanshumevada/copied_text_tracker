@@ -1,17 +1,10 @@
-import pyperclip
+import subprocess
 import threading
 import pyrebase
 
 #firebase configuration
 config = {
-    "apiKey": "AIzaSyD59NCDicwl1TDGFRWB-EZwYhukt0YLHlE",
-    "authDomain": "copylater-dc926.firebaseapp.com",
-    "databaseURL": "https://copylater-dc926.firebaseio.com",
-    "projectId": "copylater-dc926",
-    "storageBucket": "copylater-dc926.appspot.com",
-    "messagingSenderId": "812089921591",
-    "appId": "1:812089921591:web:4d720ba57b10aacf2d2fb2",
-    "measurementId": "G-8760W021S9"
+    #you can get your firebase configurations from the firebase console
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -19,6 +12,9 @@ db = firebase.database()
 
 def get_data():
     return db.child('test').get()
+
+def read_from_clipboard():
+    return subprocess.check_output('pbpaste', env={'LANG': 'en_US.UTF-8'}).decode('utf-8')
 
 def check_if_exists(link):
     links = get_data()
@@ -30,8 +26,8 @@ def check_if_exists(link):
 
 def store_data():
     threading.Timer(3.0,store_data).start()
-    if not check_if_exists(pyperclip.paste()):
-        db.child('test').push(pyperclip.paste())
+    if not check_if_exists(read_from_clipboard()):
+        db.child('test').push(read_from_clipboard())
 
 store_data()
 
