@@ -4,14 +4,7 @@ import pyperclip
 
 #firebase configuration
 config = {
-    "apiKey": "AIzaSyD59NCDicwl1TDGFRWB-EZwYhukt0YLHlE",
-    "authDomain": "copylater-dc926.firebaseapp.com",
-    "databaseURL": "https://copylater-dc926.firebaseio.com",
-    "projectId": "copylater-dc926",
-    "storageBucket": "copylater-dc926.appspot.com",
-    "messagingSenderId": "812089921591",
-    "appId": "1:812089921591:web:4d720ba57b10aacf2d2fb2",
-    "measurementId": "G-8760W021S9"
+   #you can get your firebase configurations from your firebase console
 }
 
 firebase = pyrebase.initialize_app(config)
