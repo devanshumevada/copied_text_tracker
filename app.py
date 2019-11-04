@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pyrebase
-import pyperclip
+import subprocess
 
 #firebase configuration
 config = {
@@ -14,6 +14,13 @@ app = Flask(__name__)
 
 def get_data():
     return db.child('test').get()
+   
+   
+def copy_to_clipboard(text):
+     process = subprocess.Popen(
+        'pbcopy', env={'LANG': 'en_US.UTF-8'}, stdin=subprocess.PIPE)
+     process.communicate(text.encode('utf-8'))
+   
 
 
 @app.route('/')
@@ -25,7 +32,7 @@ def index():
 def copy_data():
     data = request.form['linkval']
     if data:
-        pyperclip.copy(data)
+        copy_to_clipboard(data)
     return redirect(url_for('index'))
 
 @app.route('/delete_data/<string:id>',methods=['GET'])
